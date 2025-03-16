@@ -1,16 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Retro Racing Game</title>
+    <title>OutRun 3D</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        canvas {
-            border: 2px solid black;
-            background: #333;
+        body { 
+            margin: 0;
+            overflow: hidden;
+            background: #87CEEB;
+        }
+        canvas { 
+            display: block;
+        }
+        #speed {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-family: Arial;
+            font-size: 20px;
+            z-index: 100;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        #webgl-error {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="speed">Speed: 0 km/h</div>
+    <div id="webgl-error">
+        WebGL performance issue detected. The game might run slower than expected.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Check WebGL support before loading game
+        function checkWebGL() {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!(window.WebGLRenderingContext && 
+                    (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+            } catch(e) {
+                return false;
+            }
+        }
+
+        if (!checkWebGL()) {
+            document.getElementById('webgl-error').style.display = 'block';
+        }
+    </script>
     <script src="game.js"></script>
 </body>
 </html> 
